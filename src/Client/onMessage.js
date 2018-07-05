@@ -1,10 +1,15 @@
 // @flow
+
 import type {
   CreateFunctionClient,
   FunctionDefinition,
   WebWorker,
-  Message
+  Message,
+  FunctionMap,
+  MessageBody
 } from '../Type'
+
+import { event } from '../Type'
 
 
 type Dependencies = {
@@ -23,7 +28,7 @@ export default function onMessageImpl (
   { createFNClient, functionMap }: Dependencies
 ) {
   return function ({ worker, resolve, reject }: Init) {
-    return function onMessage ({ data }: { data: Message }) {
+    return function onMessage ({ data }: MessageBody) {
       switch (data.type) {
         case event.SUCCESS:
           let fnClient = createFNClient(data.functions, worker)

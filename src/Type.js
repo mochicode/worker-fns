@@ -43,3 +43,10 @@ export type FNClient = {
     [string]: (any) => any
   }
 };
+
+
+export type CreateFunctionClient = 
+  (FunctionDefinition, WebWorker) => FNClient;
+
+export type MessageBody = { data: Message };
+export type MessageHandler = (MessageBody)  => void;

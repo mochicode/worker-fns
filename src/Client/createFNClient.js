@@ -7,6 +7,10 @@ import type {
   FNClient
 } from '../Type'
 
+type HashMap = {
+  [string]: any
+};
+
 export default function createFNClientImpl (
   { functionMap } : { functionMap: FunctionMap }
 ) {
