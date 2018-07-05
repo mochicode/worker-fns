@@ -1,0 +1,24 @@
+{
+  "name": "worker-fns",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelriezler/worker-fns.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michaelriezler/worker-fns/issues"
+  },
+  "homepage": "https://github.com/michaelriezler/worker-fns#readme",
+  "devDependencies": {
+    "flow-bin": "^0.75.0",
+    "standard": "^11.0.1"
+  }
+}
