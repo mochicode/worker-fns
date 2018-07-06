@@ -45,7 +45,7 @@ export default function onMessageImpl (
 
           let { resolve: resolveFn, reject: rejectFn } = promiseFns
 
-          if (data.error !== '') {
+          if (data.error !== undefined) {
             return rejectFn(data.error)
           }
 
@@ -53,7 +53,9 @@ export default function onMessageImpl (
           return functionMap.remove(data.id)
 
         case event.ERROR:
-          reject(data.error)
+          if (data.error !== undefined) {
+            reject(data.error)
+          }
           return
 
         default:

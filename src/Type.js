@@ -9,15 +9,16 @@ export let event = {
   INIT: 'INIT',
   SUCCESS: 'SUCCESS',
   ERROR: 'ERROR',
-  VALUE: 'VALUE'
+  VALUE: 'VALUE',
+  CALL: 'CALL'
 }
 
 export type Event = $Keys<typeof event>;
 
 export type Message = 
   | { type: typeof event.SUCCESS, functions: FunctionDefinition }
-  | { type: typeof event.ERROR, error: string }
-  | { type: typeof event.VALUE, data: any, id: number, error: string }
+  | { type: typeof event.ERROR, error: ?string }
+  | { type: typeof event.VALUE, data: any, id: number, error: ?string }
 ;
 
 export type FunctionDefinition = {

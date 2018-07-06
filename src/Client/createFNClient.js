@@ -7,9 +7,8 @@ import type {
   FNClient
 } from '../Type'
 
-type HashMap = {
-  [string]: any
-};
+import { event } from '../Type'
+import { toObject } from '../Util'
 
 export default function createFNClientImpl (
   { functionMap } : { functionMap: FunctionMap }
@@ -36,7 +35,10 @@ export default function createFNClientImpl (
             let fun = (...args) => new Promise((resolve, reject) => {
               let id = getId()
               functionMap.push(id, { resolve, reject })
-              worker.postMessage({ type: 'CALL', payload: { path, args, id } })
+              worker.postMessage({
+                type: event.CALL, 
+                payload: { path, args, id }
+              })
             })
            
             return {
@@ -51,10 +53,6 @@ export default function createFNClientImpl (
       })
       .reduce(toObject, {})
   }
-}
-
-function toObject (acc: HashMap, x: HashMap): HashMap {
-  return Object.assign(acc, x)
 }
 
 var getId = (function() {
