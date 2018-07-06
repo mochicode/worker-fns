@@ -29,6 +29,12 @@ let NoOp = () => {}
 export function createWorker ({ debug = false }: WorkerConfig) {
   let fnScope = new Map()
 
+  function log (...msg) {
+    if (debug) {
+      console.log.apply(null, msg)
+    }
+  }
+
   return {
     use,
     start
@@ -45,11 +51,16 @@ export function createWorker ({ debug = false }: WorkerConfig) {
     self.addEventListener('message', ({ data }: OnMessage) => {
       switch (data.type) {
         case event.INIT:
-          let functions = fnScope
-            .entries(([scope, fns]) => ({ 
-              [scope]: fns.keys() 
-            }))
-            .reduce(toObject, {})
+
+          let functions = {}
+
+          let iterScope = fnScope.entries()
+
+          for (let [scope, fns] of iterScope) {
+              functions[scope] = Array.from(fns.keys()) 
+          }
+
+          log('Functions: ', functions)
 
           self.postMessage({ type: event.SUCCESS, functions })
           break
