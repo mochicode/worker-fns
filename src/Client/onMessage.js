@@ -32,14 +32,18 @@ export default function onMessageImpl (
       switch (data.type) {
         case event.SUCCESS:
           let fnClient = createFNClient(data.functions, worker)
-          resolve(fnClient)
+          resolve({ ...fnClient, worker })
           return
 
         case event.VALUE:
           let promiseFns = functionMap.get(data.id)
 
           if (!promiseFns) {
-            console.log('Missing Functions')
+            console.log(
+              'Missing Functions',
+              data.id,
+              functionMap
+            )
             return
           }
 
@@ -50,7 +54,8 @@ export default function onMessageImpl (
           }
 
           resolveFn(data.data)
-          return functionMap.remove(data.id)
+          functionMap.delete(data.id)
+          return
 
         case event.ERROR:
           if (data.error !== undefined) {

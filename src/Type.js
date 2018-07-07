@@ -30,14 +30,7 @@ export type PromiseFns = {
   reject: (any) => void 
 };
 
-export type FunctionMap = {
-  _functions: {
-    [number]: PromiseFns
-  },
-  push(number, PromiseFns): void,
-  remove(number): void,
-  get(number): ?PromiseFns
-};
+export type FunctionMap = Map<number, PromiseFns>;
 
 export type FNClient = {
   [string]: {

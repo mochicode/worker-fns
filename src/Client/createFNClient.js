@@ -8,7 +8,7 @@ import type {
 } from '../Type'
 
 import { event } from '../Type'
-import { toObject } from '../Util'
+import { toObject, getId } from '../Util'
 
 export default function createFNClientImpl (
   { functionMap } : { functionMap: FunctionMap }
@@ -34,12 +34,14 @@ export default function createFNClientImpl (
 
             let fun = (...args) => new Promise((resolve, reject) => {
               let id = getId()
-              functionMap.push(id, { resolve, reject })
+              functionMap.set(id, { resolve, reject })
               worker.postMessage({
                 type: event.CALL, 
                 payload: { path, args, id }
               })
             })
+
+            fun.$name = path.join('.')
            
             return {
               [fn]: fun
@@ -55,11 +57,3 @@ export default function createFNClientImpl (
   }
 }
 
-var getId = (function() {
-  let id = 0
-  return function () {
-    let tmp = id
-    id = id + 1
-    return tmp
-  }
-})()
